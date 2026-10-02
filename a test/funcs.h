@@ -42,7 +42,7 @@ void click2( int x, int y )
 	mouse_event( MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 }
 
-void send_9( )
+void send_input( WORD key )
 {
 	INPUT input;
 	input.type = INPUT_KEYBOARD;
@@ -51,92 +51,7 @@ void send_9( )
 	input.ki.wVk = 0;
 	input.ki.dwExtraInfo = 0;
 	input.ki.dwFlags = KEYEVENTF_SCANCODE;
-	input.ki.wScan = DIKEYBOARD_F9;
-
-	SendInput( 1, &input, sizeof( input ) );
-	Sleep( rand( ) % 23 + 85 );
-	input.ki.dwFlags = KEYEVENTF_KEYUP;
-	SendInput( 1, &input, sizeof( input ) );
-}
-
-void send_3( )
-{
-	INPUT input;
-	input.type = INPUT_KEYBOARD;
-	input.ki.time = 0;
-	//input.ki.wVk = VK_OEM_6;
-	input.ki.wVk = 0;
-	input.ki.dwExtraInfo = 0;
-	input.ki.dwFlags = KEYEVENTF_SCANCODE;
-	input.ki.wScan = DIKEYBOARD_F3;
-
-	SendInput( 1, &input, sizeof( input ) );
-	Sleep( rand( ) % 23 + 85 );
-	input.ki.dwFlags = KEYEVENTF_KEYUP;
-	SendInput( 1, &input, sizeof( input ) );
-}
-
-void send_1( )
-{
-	INPUT input;
-	input.type = INPUT_KEYBOARD;
-	input.ki.time = 0;
-	//input.ki.wVk = VK_OEM_6;
-	input.ki.wVk = 0;
-	input.ki.dwExtraInfo = 0;
-	input.ki.dwFlags = KEYEVENTF_SCANCODE;
-	input.ki.wScan = DIKEYBOARD_1;
-
-	SendInput( 1, &input, sizeof( input ) );
-	Sleep( rand( ) % 23 + 185 );
-	input.ki.dwFlags = KEYEVENTF_KEYUP;
-	SendInput( 1, &input, sizeof( input ) );
-}
-
-void send_4( )
-{
-	INPUT input;
-	input.type = INPUT_KEYBOARD;
-	input.ki.time = 0;
-	//input.ki.wVk = VK_OEM_6;
-	input.ki.wVk = 0;
-	input.ki.dwExtraInfo = 0;
-	input.ki.dwFlags = KEYEVENTF_SCANCODE;
-	input.ki.wScan = DIKEYBOARD_4;
-
-	SendInput( 1, &input, sizeof( input ) );
-	Sleep( rand( ) % 23 + 185 );
-	input.ki.dwFlags = KEYEVENTF_KEYUP;
-	SendInput( 1, &input, sizeof( input ) );
-}
-
-void send_space( )
-{
-	INPUT input;
-	input.type = INPUT_KEYBOARD;
-	input.ki.time = 0;
-	//input.ki.wVk = VK_OEM_6;
-	input.ki.wVk = 0;
-	input.ki.dwExtraInfo = 0;
-	input.ki.dwFlags = KEYEVENTF_SCANCODE;
-	input.ki.wScan = DIKEYBOARD_SPACE;
-
-	SendInput( 1, &input, sizeof( input ) );
-	Sleep( rand( ) % 23 + 85 );
-	input.ki.dwFlags = KEYEVENTF_KEYUP;
-	SendInput( 1, &input, sizeof( input ) );
-}
-
-void send_esc( )
-{
-	INPUT input;
-	input.type = INPUT_KEYBOARD;
-	input.ki.time = 0;
-	//input.ki.wVk = VK_OEM_6;
-	input.ki.wVk = 0;
-	input.ki.dwExtraInfo = 0;
-	input.ki.dwFlags = KEYEVENTF_SCANCODE;
-	input.ki.wScan = DIKEYBOARD_ESCAPE;
+	input.ki.wScan = key;
 
 	SendInput( 1, &input, sizeof( input ) );
 	Sleep( rand( ) % 10 + 65 );
@@ -288,11 +203,11 @@ void cape( )
 	{
 		click( );
 		Sleep( rand( ) % 60 + 606 );
-		send_4( );
+		send_input( DIKEYBOARD_4 );
 		Sleep( rand( ) % 60 + 1200 );
 		click( );
 		Sleep( rand( ) % 60 + 606 );
-		send_1( );
+		send_input( DIKEYBOARD_1 );
 		Sleep( rand( ) % 60 + 606 );
 	}
 
@@ -348,7 +263,7 @@ void plank( int * laps )
 
 	click( );
 	Sleep( rand( ) % 100 + 1010 );
-	send_9( );
+	send_input( DIKEYBOARD_F9 );
 	Sleep( rand( ) % 100 + 2310 );
 
 	for (double t = 0; t < 1; t += 0.05)
@@ -380,22 +295,22 @@ void plank( int * laps )
 	click( );
 	Sleep( rand( ) % 50 + 601 );
 	if ( *laps % 8 == 0 ) {
-		send_space( );
+		send_input( DIKEYBOARD_SPACE );
 		Sleep( rand( ) % 80 + 600 );
-		send_1( );
+		send_input( DIKEYBOARD_1 );
 		Sleep( rand( ) % 100 + 601 );
-		send_space( );
+		send_input( DIKEYBOARD_SPACE );
 		Sleep( rand( ) % 100 + 605 );
 	}
-	send_1( );
+	send_input( DIKEYBOARD_1 );
 	Sleep( rand( ) % 45 + 604 );
-	send_space( );
+	send_input( DIKEYBOARD_SPACE );
 	Sleep( rand( ) % 45 + 608 );
-	send_1( );
+	send_input( DIKEYBOARD_1 );
 	Sleep( rand( ) % 40 + 601 );
-	send_space( );
+	send_input( DIKEYBOARD_SPACE );
 	Sleep( rand( ) % 30 + 601 );
-	send_3( );
+	send_input( DIKEYBOARD_F3 );
 
 	p_0 = { 0, 0 };
 	p_3 = { 5 - var[0], 114 - var[1] };
@@ -1194,7 +1109,7 @@ void glassmake( int * laps, std::array< int, 2 > &start, std::array< int, 2 > &i
 		slept = 0;
 
 		if ( i == 1 )
-			send_esc( );
+			send_input( DIKEYBOARD_ESCAPE );
 
 		for (double t = 0; t < 1; t += 0.1)
 		{
